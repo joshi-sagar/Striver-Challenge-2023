@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+void calculate(string s, vector<string> & ans, int j)
+{
+    if(j>=s.length())
+    {
+        ans.push_back(s);
+        return;
+    }
+    for(int i =j;i<s.length();i++)
+    {
+        swap(s[i], s[j]);
+        calculate(s, ans, j+1);
+        swap(s[i], s[j]);
+    }
+}
+vector<string> findPermutations(string &s) {
+    // Write your code here.
+    vector<string>ans;
+    if(s.length()<=0) return ans;
+    calculate(s, ans, 0);
+    return ans;
+}
