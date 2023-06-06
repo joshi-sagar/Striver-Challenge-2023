@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+vector<int> nextPermutation(vector<int> &permutation, int n)
+{
+    //  Write your code here.
+    int value=-1, temp;
+    for(int i = n-1;i>0;i--)
+    {
+        if(permutation[i]>permutation[i-1]) {value = i-1; break;}
+    }
+    if(value == -1)
+    {
+        reverse(permutation.begin(), permutation.end());
+        return permutation;
+    }
+    temp = value+1;
+    for(int i = value+1;i<n;i++)
+    {
+        if(permutation[value]<permutation[i]&&permutation[i]<permutation[temp]) temp=i;
+    }
+    swap(permutation[temp], permutation[value]);
+    reverse(permutation.begin() + value+1, permutation.end());
+    return permutation;
+}
