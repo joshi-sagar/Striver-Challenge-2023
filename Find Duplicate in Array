@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+
+int findDuplicate(vector<int> &arr, int n){
+	// Write your code here.
+	int fast=0, slow = 0;
+	while(true)
+	{
+		fast = arr[arr[fast]];
+		slow = arr[slow];
+		if(fast == slow) break;
+	}
+	slow = 0;
+	while(true)
+	{
+		slow = arr[slow];
+		fast = arr[fast];
+		if(slow == fast) return slow;
+	}
+}
