@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 
+int merge(long long *& arr, int s, int e)
+{
+    int m = s+(e-s)/2;
+    int l1 = m-s+1, l2 = e-m;
+    vector<int>first(l1, 0);
+    vector<int>second(l2, 0);
+    int maini=s;
+    for(int i =0;i<l1;i++) first[i]=arr[maini++];
+    for(int i = 0;i<l2;i++) second[i]= arr[maini++];
+    int firsti=0, secondi = 0,count=0;
+    maini = s;
+    while(firsti<l1 && secondi <l2)
+    {
+        if(first[firsti]<=second[secondi]) arr[maini++]= first[firsti++];
+        else 
+        {
+            arr[maini++] = second[secondi++];
+          count = count+ m - s - firsti + 1;
+        }
+        
+    }
+    while(firsti<l1) arr[maini++]= first[firsti++];
+    while(secondi<l2) arr[maini++] = second[secondi++];
+    return count;
+}
+int ms(long long * &arr, int s, int e)
+{
+    int count=0;
+    if(s>=e) return 0;
+    int mid = s+(e-s)/2;
+    count+=ms(arr, s, mid);
+    count+=ms(arr, mid+1, e);
+    count+=merge(arr, s, e);
+    return count;
+}
+long long getInversions(long long *arr, int n){
+    // Write your code here.
+    return ms(arr, 0, n-1);
+}
