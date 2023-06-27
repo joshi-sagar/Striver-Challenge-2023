@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+int solve(string str1, string str2, int i, int j,vector<vector<int>>&dp)
+{
+    if(i==0) return j;
+    if(j==0) return i;
+    if(dp[i][j]!=-1) return dp[i][j];
+    if(str1[i-1]==str2[j-1]) return solve(str1, str2, i-1, j-1,dp);
+    else
+    {
+        int del = 1+solve(str1, str2, i-1, j,dp);
+        int replace = 1+solve(str1, str2, i-1, j-1,dp);
+        int insert = 1+solve(str1, str2, i, j-1,dp);
+        return dp[i][j]= min(del, min(replace, insert));
+    }
+}
+int editDistance(string str1, string str2)
+{
+    //write you code here
+    int n = str1.length(), m = str2.length();
+    vector<vector<int>>dp(n+1, vector<int>(m+1, 0));
+    for(int i =1;i<=n;i++) dp[i][0]=i;
+    for(int i =1;i<=m;i++) dp[0][i]=i;
+    for(int i =1;i<=n;i++)
+    {
+        for(int j =1;j<=m;j++)
+        {
+            if(str1[i-1]==str2[j-1]) dp[i][j]= dp[i-1][j-1];
+            else
+            {
+                int del = 1+ dp[i-1][j];
+                int replace = 1+ dp[i-1][j-1];
+                int insert = 1+ dp[i][j-1];
+                dp[i][j]= min(del, min(replace, insert));
+            }
+        }
+    }
+    return dp[n][m];
+    //return solve(str1, str2, n, m,dp );
+}
